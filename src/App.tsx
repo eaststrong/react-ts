@@ -1,19 +1,10 @@
 import { nanoid } from "nanoid";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 import FilterButton from "./components/FilterButton";
 import Form from "./components/Form";
 import Todo from "./components/Todo";
 import Task from './types/task.ts';
-
-function usePrevious(value: number): number {
-  const ref: MutableRefObject<any> = useRef(null);
-  console.log(ref);
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
 
 const FILTER_MAP = {
   All: () => true,
@@ -23,11 +14,9 @@ const FILTER_MAP = {
 
 const FILTER_NAMES = Object.keys(FILTER_MAP);
 
-function App(props: { tasks: Task[]; }) {
+function App(props: { tasks: Task[] }) {
   const [ tasks, setTasks ] = useState(props.tasks);
   const [ filter, setFilter ] = useState("All");
-  const listHeadingRef: MutableRefObject<any> = useRef(null);
-  const prevTaskLength: number = usePrevious(tasks.length);
 
   const filterList = FILTER_NAMES.map((name) => (
     <FilterButton
@@ -80,16 +69,14 @@ function App(props: { tasks: Task[]; }) {
   }
 
   function addTask(name: string) {
-    const newTask: Task = { id: `todo-${nanoid()}`, name, completed: false, };
+    const newTask: Task = {
+      completed: false,
+      id: `todo-${nanoid()}`,
+      name,
+    };
+
     setTasks([ ...tasks, newTask, ]);
   }
-
-  useEffect(
-    () => {
-      if (tasks.length < prevTaskLength) listHeadingRef.current.focus();
-    },
-    [ tasks.length, prevTaskLength ]
-  );
 
   return (
     <div className="todoapp stack-large">
@@ -98,7 +85,6 @@ function App(props: { tasks: Task[]; }) {
       <div className="filters btn-group stack-exception">{filterList}</div>
       <h2
         id="list-heading"
-        ref={listHeadingRef}
         tabIndex={-1}
       >
         {headingText}

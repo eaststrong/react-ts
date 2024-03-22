@@ -1,4 +1,8 @@
-function FilterButton(props: { isPressed: boolean; setFilter: (arg0: string) => void; name: string; }) {
+function FilterButton(props: {
+  isPressed: boolean,
+  name: string,
+  setFilter: (arg0: string) => void,
+}) {
   return (
     <button
       aria-pressed={props.isPressed}

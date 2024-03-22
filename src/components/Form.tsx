@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
-function Form(props: { addTask: (arg0: string) => void; }) {
+function Form(props: { addTask: (arg0: string) => void }) {
   const [ name, setName ] = useState("");
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {

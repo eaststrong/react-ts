@@ -22,8 +22,13 @@ const DATA: Task[] = [
   },
 ];
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App tasks={DATA} />
-  </React.StrictMode>,
-);
+const root: HTMLElement = document.getElementById('root')!;
+
+ReactDOM
+  .createRoot(root)
+  .render(
+    <React.StrictMode>
+      <App tasks={DATA} />
+    </React.StrictMode>,
+  )
+;
